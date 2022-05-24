@@ -12,19 +12,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with: 
           token: ${{secrets.TOKEN_GITHUB}}
-      - uses: fregante/setup-git-user@v1
+      - run: |
+          echo -e "starting update to gh-pages"
+          mkdir -p $SOURCE
+          cd $SOURCE
+          git config user.name rmagomeromdlive
+          git config user.email rmagomero@mdlive.com
+          git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master > /dev/null
+          cd ../..
+
+      - name: Pushes to repo
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         with:
-          name: 'rmagomeromdlive'
-          email: 'rmagomero@mdlive.com'
-      - run: echo -e "starting update to gh-pages"
-      - run:   mkdir -p $SOURCE
-      - run:  cd $SOURCE
-      - run: git clone --depth 1 --quiet --branch=main https://$TOKEN@github.com/rmagomeromdlive/mobile_dist_test.git master > /d
-      - run:  git add .
-      - run:  git commit -m "Github build ${{github.run_number}} pushed to gh-pages"
-      - run:  git push -fq origin main > /dev
-      - run:  echo -e "done updating\n"
-      
+          source_file: ${{env.SOURCE}}
+          destination_repo: 'rmagomeromdlive/mobile_dist_test'
+          destination_folder: 'release'
+          user_email: 'rmagomeromdlive@mdlive.com'
+          user_name: 'rmagomeromdlive'
+          commit_message: 'test commit'
+
