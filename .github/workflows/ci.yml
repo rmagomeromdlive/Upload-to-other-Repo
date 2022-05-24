@@ -8,15 +8,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@devel
+      - name: Checkout
+        uses: actions/checkout@v3
+   
+      - name: Pushes test file
+        uses: dmnemec/copy_file_to_another_repo_action@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         with:
-          source-directory: /
-          destination-github-username: 'rmagomeromdlive'
-          destination-repository-name: 'mobile_dist_test'
-          user-email: rmagomero@mdlive.com
-          commit-message: test commit
-          target-branch: main
+          source_file: 'public'
+          destination_repo: 'rmagomeromdlive/mobile_dist_test'
+          destination_folder: 'release'
+          user_email: 'rmagomeromdlive@mdlive.com'
+          user_name: 'rmagomeromdlive'
+          commit_message: 'test commit'
