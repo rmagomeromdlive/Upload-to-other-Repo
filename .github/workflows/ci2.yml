@@ -29,9 +29,9 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         with:
-          source_file: ${{env.SOURCE}}
+          source_file: ${{env.SOURCE}}/master
           destination_repo: 'rmagomeromdlive/mobile_dist_test'
-          destination_folder: 'release'
+          destination_folder: ''
           user_email: 'rmagomeromdlive@mdlive.com'
           user_name: 'rmagomeromdlive'
           commit_message: 'test commit'
