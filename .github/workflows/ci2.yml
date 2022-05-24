@@ -4,6 +4,7 @@ on: push
 
 env:
   SOURCE: output/${{github.run_number}}
+  OUTPUT: output/${{github.run_number}}/master
   TOKEN: ${{secrets.TOKEN_GITHUB}}
 
 
@@ -22,10 +23,10 @@ jobs:
           git config --global user.email rmagomeromdlive@mdlive.com
           git config --global user.name rmagomeromdlive
           git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master
-          cd master
           ls
           echo "hello" > README.md
-          cd ../../..
+          cat README.md
+          cd ../..
 
       - name: Pushes to repo
         uses: dmnemec/copy_file_to_another_repo_action@main
