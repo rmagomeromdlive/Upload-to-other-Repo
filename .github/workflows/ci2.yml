@@ -19,10 +19,11 @@ jobs:
           echo -e "starting update to gh-pages"
           mkdir -p $SOURCE
           cd $SOURCE
-          git config user.name rmagomeromdlive
-          git config user.email rmagomero@mdlive.com
+          git config --global user.email rmagomeromdlive@mdlive.com
+          git config --global user.name rmagomeromdlive
           git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master
           cd master
+          ls
           echo "hello" > README.md
           cd ../../..
 
@@ -33,8 +34,7 @@ jobs:
         with:
           source_file: ${{env.SOURCE}}/master
           destination_repo: 'rmagomeromdlive/mobile_dist_test'
-          destination_folder: ''
           user_email: 'rmagomeromdlive@mdlive.com'
           user_name: 'rmagomeromdlive'
-          commit_message: 'test commit'
+          commit_message: 'Hopefully this works this time'
 
