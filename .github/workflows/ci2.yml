@@ -4,7 +4,7 @@ on: push
 
 env:
   SOURCE: output/${{github.run_number}}
-  OUTPUT: output/${{github.run_number}}/master
+  OUTPUT: README.md
   TOKEN: ${{secrets.TOKEN_GITHUB}}
 
 
@@ -24,8 +24,9 @@ jobs:
           git config --global user.name rmagomeromdlive
           git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master
           ls
-          echo "hello" > README.md
+          cd master
           cat README.md
+          rm -rf .git
           cd ../..
 
       - name: Pushes to repo
@@ -33,7 +34,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         with:
-          source_file: ${{env.SOURCE}}/master
+          source_file: ${{env.OUTPUT}}
           destination_repo: 'rmagomeromdlive/mobile_dist_test'
           user_email: 'rmagomeromdlive@mdlive.com'
           user_name: 'rmagomeromdlive'
