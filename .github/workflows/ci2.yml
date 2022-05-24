@@ -1,0 +1,30 @@
+name: Ruby
+
+on: push
+
+env:
+  SOURCE: output/${{github.run_number}}
+  TOKEN: ${{secrets.TOKEN_GITHUB}}
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with: 
+          token: ${{secrets.TOKEN_GITHUB}}
+      - uses: fregante/setup-git-user@v1
+        with:
+          name: 'rmagomeromdlive'
+          email: 'rmagomero@mdlive.com'
+      - run: echo -e "starting update to gh-pages"
+      - run:   mkdir -p $SOURCE
+      - run:  cd $SOURCE
+      - run: git clone --depth 1 --quiet --branch=main https://$TOKEN@github.com/rmagomeromdlive/mobile_dist_test.git master > /d
+      - run:  git add .
+      - run:  git commit -m "Github build ${{github.run_number}} pushed to gh-pages"
+      - run:  git push -fq origin main > /dev
+      - run:  echo -e "done updating\n"
+      

@@ -1,0 +1,21 @@
+name: "Do stuff"
+description: "create release"
+runs:
+  using: "composite"
+  steps:
+    - run: echo -e "starting update to gh-pages"
+      shell: bash
+    - run:  mkdir -p $SOURCE
+      shell: bash
+    - run: cd $SOURCE
+      shell: bash
+    - run:  git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master > /dev/null
+      shell: bash
+    - run: git add .
+      shell: bash
+    - run: git commit -m "Github build ${{github.run_number}} pushed to gh-pages"
+      shell: bash
+    - run: git push -fq origin main > /dev/null
+      shell: bash
+    - run: echo -e "done updating\n"
+      shell: bash
