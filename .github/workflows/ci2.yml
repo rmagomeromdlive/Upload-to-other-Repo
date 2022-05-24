@@ -21,8 +21,10 @@ jobs:
           cd $SOURCE
           git config user.name rmagomeromdlive
           git config user.email rmagomero@mdlive.com
-          git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master > /dev/null
-          cd ../..
+          git clone --depth 1 --quiet --branch=main https://github.com/rmagomeromdlive/mobile_dist_test.git master
+          cd master
+          echo "hello" > README.md
+          cd ../../..
 
       - name: Pushes to repo
         uses: dmnemec/copy_file_to_another_repo_action@main
